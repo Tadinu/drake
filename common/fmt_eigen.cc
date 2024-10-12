@@ -13,6 +13,7 @@ template <typename T>
 using FormatterEigenRef =
     Eigen::Ref<const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>;
 
+#if 0
 template <typename Scalar>
 std::string FormatEigenMatrix(const FormatterEigenRef<Scalar>& matrix)
   requires std::is_same_v<Scalar, double> || std::is_same_v<Scalar, float> ||
@@ -39,6 +40,6 @@ template std::string FormatEigenMatrix<float>(
     const FormatterEigenRef<float>& matrix);
 template std::string FormatEigenMatrix<std::string>(
     const FormatterEigenRef<std::string>& matrix);
-
+#endif
 }  // namespace internal
 }  // namespace drake

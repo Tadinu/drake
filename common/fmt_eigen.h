@@ -18,6 +18,7 @@ struct fmt_eigen_ref {
       matrix;
 };
 
+#if 0
 /* Returns the string formatting of the given matrix.
 @tparam Scalar must be either double, float, or string */
 template <typename Scalar>
@@ -26,7 +27,7 @@ std::string FormatEigenMatrix(
         const Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic>>& matrix)
   requires std::is_same_v<Scalar, double> || std::is_same_v<Scalar, float> ||
            std::is_same_v<Scalar, std::string>;
-
+#endif
 }  // namespace internal
 
 /** When passing an Eigen::Matrix to fmt, use this wrapper function to instruct
@@ -73,15 +74,24 @@ struct formatter<drake::internal::fmt_eigen_ref<Scalar>>
     const auto& matrix = ref.matrix;
     if constexpr (std::is_same_v<Scalar, double> ||
                   std::is_same_v<Scalar, float>) {
+
       return formatter<std::string_view>{}.format(
-          drake::internal::FormatEigenMatrix<Scalar>(matrix), ctx);
+#if 0
+          drake::internal::FormatEigenMatrix<Scalar>(matrix)
+#else
+          ""
+#endif
+      , ctx);
     } else {
       return formatter<std::string_view>{}.format(
+#if 0
           drake::internal::FormatEigenMatrix<std::string>(
               matrix.unaryExpr([](const auto& element) -> std::string {
-                return fmt::to_string(element);
-              })),
-          ctx);
+                return fmt::to_string(element);}))
+#else
+          ""
+#endif
+      , ctx);
     }
   }
 };

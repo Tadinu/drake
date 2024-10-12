@@ -89,7 +89,7 @@ install(
     data = ["package.xml"],
     docs = ["LICENSE.TXT"],
     deps = [
-        "//bindings/pydrake:install",
+        #"//bindings/pydrake:install",
         "//common:install",
         "//examples:install",
         "//geometry:install",
